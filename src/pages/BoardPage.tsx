@@ -17,6 +17,8 @@ import { DeleteConfirmModal } from '../components/DeleteConfirmModal';
 import { ImportExportModal } from '../components/ImportExportModal';
 import { CheckCircle2 } from 'lucide-react';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export const BoardPage: React.FC = () => {
   // Theme & Storage
   const [tasks, setTasks] = useState<Task[]>(() => loadTasksFromStorage());
@@ -268,7 +270,7 @@ export const BoardPage: React.FC = () => {
       {/* 4. Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/40 py-3.5 mt-auto transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-500">
-          <p>© {new Date().getFullYear()} FlowBoard</p>
+          <p>© {CURRENT_YEAR} FlowBoard</p>
           <div className="flex items-center gap-4">
             <span title="No account needed. Your tasks never leave this device.">
               Your tasks are saved in this browser
