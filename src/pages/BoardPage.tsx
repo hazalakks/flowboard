@@ -282,13 +282,16 @@ export const BoardPage: React.FC = () => {
       </footer>
 
       {/* Modals */}
-      <TaskModal
-        isOpen={isTaskModalOpen}
-        onClose={() => setIsTaskModalOpen(false)}
-        onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
-        initialTask={editingTask}
-        defaultStatus={defaultStatusForNew}
-      />
+      {isTaskModalOpen && (
+        <TaskModal
+          key={editingTask?.id ?? `new-${defaultStatusForNew}`}
+          isOpen={isTaskModalOpen}
+          onClose={() => setIsTaskModalOpen(false)}
+          onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
+          initialTask={editingTask}
+          defaultStatus={defaultStatusForNew}
+        />
+      )}
 
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}

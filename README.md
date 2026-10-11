@@ -1,8 +1,10 @@
-# ⚡ FlowBoard — Minimalist Kanban Task Manager
+﻿# ⚡ FlowBoard — Minimalist Kanban Task Manager
 
 <div align="center">
 
-![FlowBoard Preview](screenshots/preview.png)
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Light mode](screenshots/light.png) | ![Dark mode](screenshots/dark.png) |
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -35,7 +37,7 @@ This project fulfills all requirements specified in the project guidelines:
 | **2. Read (List)** | ✅ | 4 clean columns (To Do, In Progress, In Review, Done) with counters & progress |
 | **3. Update (Edit & Drag-Drop)**| ✅ | Edit task details modal, quick-toggle completed, and **HTML5 Drag & Drop** column movement |
 | **4. Delete (Remove)** | ✅ | Safe task deletion with confirmation dialog (`DeleteConfirmModal`) |
-| **Project Screenshot** | ✅ | High-resolution preview image saved in `screenshots/preview.png` |
+| **Project Screenshot** | ✅ | Real app screenshots in `screenshots/light.png` and `screenshots/dark.png` |
 | **GitHub Public Repository** | ✅ | Git initialized with structured commits on `main` branch |
 | **Netlify Deployment** | ✅ | `netlify.toml` configured with SPA redirects for instant 1-click deploy |
 
@@ -59,7 +61,8 @@ flowboard/
 ├── public/
 │   └── favicon.svg              # Custom SVG Kanban logo
 ├── screenshots/
-│   └── preview.png              # Showcase application screenshot
+│   ├── light.png                # Light mode screenshot
+│   └── dark.png                 # Dark mode screenshot
 ├── src/
 │   ├── components/              # Modular UI components
 │   │   ├── Column.tsx           # Column droppable zone

@@ -64,6 +64,13 @@ export const AVAILABLE_TAGS = [
   'DevOps',
 ];
 
+// Seed due dates are relative to today so the demo never looks overdue.
+function daysFromNow(days: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toLocaleDateString('en-CA'); // local YYYY-MM-DD
+}
+
 export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-1',
@@ -72,7 +79,7 @@ export const INITIAL_TASKS: Task[] = [
     status: 'done',
     priority: 'high',
     tags: ['UI/UX', 'Frontend'],
-    dueDate: '2026-10-15',
+    dueDate: daysFromNow(3),
     createdAt: new Date(Date.now() - 4 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
   },
@@ -83,7 +90,7 @@ export const INITIAL_TASKS: Task[] = [
     status: 'in_progress',
     priority: 'urgent',
     tags: ['Frontend'],
-    dueDate: '2026-10-14',
+    dueDate: daysFromNow(2),
     createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -94,7 +101,7 @@ export const INITIAL_TASKS: Task[] = [
     status: 'done',
     priority: 'medium',
     tags: ['Frontend'],
-    dueDate: '2026-10-12',
+    dueDate: daysFromNow(0),
     createdAt: new Date(Date.now() - 5 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 2 * 86400000).toISOString(),
   },
@@ -105,7 +112,7 @@ export const INITIAL_TASKS: Task[] = [
     status: 'in_progress',
     priority: 'medium',
     tags: ['Frontend'],
-    dueDate: '2026-10-18',
+    dueDate: daysFromNow(6),
     createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -116,7 +123,7 @@ export const INITIAL_TASKS: Task[] = [
     status: 'review',
     priority: 'high',
     tags: ['DevOps'],
-    dueDate: '2026-10-13',
+    dueDate: daysFromNow(1),
     createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -127,7 +134,7 @@ export const INITIAL_TASKS: Task[] = [
     status: 'todo',
     priority: 'low',
     tags: ['AI'],
-    dueDate: '2026-10-22',
+    dueDate: daysFromNow(10),
     createdAt: new Date(Date.now() - 1 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
   },

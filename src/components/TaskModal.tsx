@@ -18,33 +18,16 @@ export const TaskModal: React.FC<TaskModalProps> = ({
   initialTask,
   defaultStatus = 'todo',
 }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [status, setStatus] = useState<TaskStatus>('todo');
-  const [priority, setPriority] = useState<TaskPriority>('medium');
-  const [tags, setTags] = useState<string[]>([]);
+  // State is initialized from props. The parent remounts this component
+  // (via a `key`) every time the modal opens, so no sync effect is needed.
+  const [title, setTitle] = useState(initialTask?.title ?? '');
+  const [description, setDescription] = useState(initialTask?.description ?? '');
+  const [status, setStatus] = useState<TaskStatus>(initialTask?.status ?? defaultStatus);
+  const [priority, setPriority] = useState<TaskPriority>(initialTask?.priority ?? 'medium');
+  const [tags, setTags] = useState<string[]>(initialTask?.tags ?? []);
   const [customTagInput, setCustomTagInput] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [dueDate, setDueDate] = useState(initialTask?.dueDate ?? '');
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (initialTask) {
-      setTitle(initialTask.title);
-      setDescription(initialTask.description);
-      setStatus(initialTask.status);
-      setPriority(initialTask.priority);
-      setTags(initialTask.tags || []);
-      setDueDate(initialTask.dueDate || '');
-    } else {
-      setTitle('');
-      setDescription('');
-      setStatus(defaultStatus);
-      setPriority('medium');
-      setTags([]);
-      setDueDate('');
-    }
-    setError('');
-  }, [initialTask, defaultStatus, isOpen]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

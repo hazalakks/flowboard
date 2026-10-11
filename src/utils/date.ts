@@ -3,7 +3,9 @@ export function formatDueDate(dateStr?: string): { text: string; isOverdue: bool
     return { text: '', isOverdue: false, isToday: false };
   }
 
-  const targetDate = new Date(dateStr);
+  // Parse "YYYY-MM-DD" as a local date (new Date(str) would treat it as UTC).
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const targetDate = new Date(y, m - 1, d);
   const now = new Date();
   
   const targetMidnight = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
