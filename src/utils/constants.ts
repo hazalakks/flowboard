@@ -1,6 +1,9 @@
 import type { ColumnDef } from '../interfaces/column';
 import type { Task } from '../interfaces/task';
 
+// TODO: update this after creating the GitHub repository.
+export const REPO_URL = 'https://github.com/hazal/flowboard';
+
 export const COLUMNS: ColumnDef[] = [
   {
     id: 'todo',

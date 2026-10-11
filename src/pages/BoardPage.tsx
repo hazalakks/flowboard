@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import type { Task, TaskFormData, TaskStatus } from '../interfaces/task';
 import type { FilterState, BoardStats } from '../interfaces/filter';
-import { COLUMNS } from '../utils/constants';
+import { COLUMNS, REPO_URL } from '../utils/constants';
 import { 
   loadTasksFromStorage, 
   saveTasksToStorage, 
@@ -268,15 +268,19 @@ export const BoardPage: React.FC = () => {
       {/* 4. Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/40 py-3.5 mt-auto transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-500">
-          <p>
-            FlowBoard • Built with React, TypeScript & Tailwind CSS
-          </p>
-          <div className="flex items-center gap-3">
-            <span>Drag & Drop</span>
-            <span>•</span>
-            <span>LocalStorage</span>
-            <span>•</span>
-            <span>Netlify Ready</span>
+          <p>© {new Date().getFullYear()} FlowBoard</p>
+          <div className="flex items-center gap-4">
+            <span title="No account needed. Your tasks never leave this device.">
+              Your tasks are saved in this browser
+            </span>
+            <a
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+            >
+              GitHub
+            </a>
           </div>
         </div>
       </footer>
