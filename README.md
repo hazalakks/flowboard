@@ -1,4 +1,4 @@
-﻿# ⚡ FlowBoard — Minimalist Kanban Task Manager
+# ⚡ FlowBoard — Minimalist Kanban Task Manager
 
 <div align="center">
 
@@ -11,13 +11,14 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-Fast_Build-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Netlify](https://img.shields.io/badge/Deploy-Netlify_Ready-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_on_Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://flowboard-hazal.netlify.app/)
 [![Storage](https://img.shields.io/badge/Storage-LocalStorage-F58220?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 <br/>
 
 **FlowBoard** is a clean, modern, and responsive Kanban task management application built with **React 19**, **TypeScript**, and **Tailwind CSS**. It features native **HTML5 Drag & Drop**, **LocalStorage persistence**, **instant search & priority filters**, and a seamless **Light / Dark mode** switcher.
 
-[✨ Features](#-key-features) • [📂 Project Structure](#-project-structure) • [🛠️ Quick Start](#️-getting-started) • [🚀 Deploy to Netlify](#-deploy-to-netlify)
+[🌐 Live Demo](https://flowboard-hazal.netlify.app/) • [✨ Features](#-key-features) • [📂 Project Structure](#-project-structure) • [🛠️ Quick Start](#️-getting-started) • [🚀 Deploy to Netlify](#-deploy-to-netlify)
 
 </div>
 
