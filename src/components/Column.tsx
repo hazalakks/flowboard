@@ -84,16 +84,10 @@ export const Column: React.FC<ColumnProps> = ({
       {/* Task List */}
       <div className="flex-1 flex flex-col gap-2.5 overflow-y-auto">
         {tasks.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center border border-dashed border-slate-300/80 dark:border-slate-800 rounded-xl my-1">
+          <div className="flex-1 flex items-center justify-center p-6 text-center border border-dashed border-slate-300/80 dark:border-slate-800 rounded-xl my-1">
             <p className="text-xs text-slate-400 dark:text-slate-500">
               No tasks here
             </p>
-            <button
-              onClick={() => onAddTask(column.id)}
-              className="mt-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:underline"
-            >
-              + Add a task
-            </button>
           </div>
         ) : (
           tasks.map((task) => (
@@ -109,15 +103,6 @@ export const Column: React.FC<ColumnProps> = ({
           ))
         )}
       </div>
-
-      {/* Add Task Button at bottom */}
-      <button
-        onClick={() => onAddTask(column.id)}
-        className="mt-2.5 flex items-center justify-center gap-1.5 w-full py-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-800 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all shadow-2xs"
-      >
-        <Plus className="w-3.5 h-3.5" />
-        <span>Add Task</span>
-      </button>
     </div>
   );
 };
