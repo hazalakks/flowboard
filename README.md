@@ -1,57 +1,76 @@
-# ⚡ FlowBoard — Minimalist Kanban Task Manager
+# ⚡ FlowBoard
 
 <div align="center">
 
-| Light Mode | Dark Mode |
-| :---: | :---: |
-| ![Light mode](screenshots/light.png) | ![Dark mode](screenshots/dark.png) |
-
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vite](https://img.shields.io/badge/Vite-Fast_Build-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Netlify](https://img.shields.io/badge/Deploy-Netlify_Ready-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
-[![Live Demo](https://img.shields.io/badge/Demo-Live_on_Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://flowboard-hazal.netlify.app/)
-[![Storage](https://img.shields.io/badge/Storage-LocalStorage-F58220?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+**A minimalist, local-first Kanban task management application designed for speed and clarity.**
 
 <br/>
 
-**FlowBoard** is a clean, modern, and responsive Kanban task management application built with **React 19**, **TypeScript**, and **Tailwind CSS**. It features native **HTML5 Drag & Drop**, **LocalStorage persistence**, **instant search & priority filters**, and a seamless **Light / Dark mode** switcher.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-flowboard--hazal.netlify.app-4F46E5?style=for-the-badge&logo=netlify&logoColor=white)](https://flowboard-hazal.netlify.app/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](LICENSE)
 
-[🌐 Live Demo](https://flowboard-hazal.netlify.app/) • [✨ Features](#-key-features) • [📂 Project Structure](#-project-structure) • [🛠️ Quick Start](#️-getting-started) • [🚀 Deploy to Netlify](#-deploy-to-netlify)
+<br/>
+
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Light Mode](screenshots/light.png) | ![Dark Mode](screenshots/dark.png) |
+
+<br/>
+
+[Explore Demo](https://flowboard-hazal.netlify.app/) • [Features](#-key-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Architecture](#-project-structure)
 
 </div>
 
 ---
 
-## 📋 Project Requirements & Rubric Compliance
+## 💡 Overview
 
-This project fulfills all requirements specified in the project guidelines:
+**FlowBoard** is a modern task manager inspired by tools like Linear and Notion. It strips away the bloat of traditional project management tools in favor of a clean, responsive, and completely private user experience.
 
-| Requirement | Status | Implementation Details |
-| :--- | :---: | :--- |
-| **Modern JS Library / Framework** | ✅ | **React 19** + **TypeScript** powered by **Vite** |
-| **LocalStorage Persistence** | ✅ | Tasks, theme preference, and board states persist in `localStorage` |
-| **CSS Framework** | ✅ | **Tailwind CSS v4** (Utility-first, responsive, Dark/Light mode) |
-| **Project Directory Tree** | ✅ | Structured in `components/`, `pages/`, `interfaces/`, and `utils/` |
-| **1. Create (Add)** | ✅ | Create new task modal with title, description, priority, column, tags & due date |
-| **2. Read (List)** | ✅ | 4 clean columns (To Do, In Progress, In Review, Done) with counters & progress |
-| **3. Update (Edit & Drag-Drop)**| ✅ | Edit task details modal, quick-toggle completed, and **HTML5 Drag & Drop** column movement |
-| **4. Delete (Remove)** | ✅ | Safe task deletion with confirmation dialog (`DeleteConfirmModal`) |
-| **Project Screenshot** | ✅ | Real app screenshots in `screenshots/light.png` and `screenshots/dark.png` |
-| **GitHub Public Repository** | ✅ | Git initialized with structured commits on `main` branch |
-| **Netlify Deployment** | ✅ | `netlify.toml` configured with SPA redirects for instant 1-click deploy |
+- **Zero setup:** No sign-up, no database to configure, no cloud subscriptions.
+- **Local-first privacy:** All data remains strictly inside your browser's local storage.
+- **Fluid interactions:** Native HTML5 Drag and Drop without external library overhead.
+- **Instant response:** Built on Vite and React 19 for instantaneous render and sub-millisecond filtering.
 
 ---
 
 ## ✨ Key Features
 
-- **🎯 4 Focused Kanban Columns:** *To Do*, *In Progress*, *In Review*, and *Done*.
-- **🖱️ Native HTML5 Drag & Drop:** Effortlessly drag cards across columns with smooth drop feedback.
-- **🌓 Light & Dark Mode:** Toggle between sleek dark mode and bright light mode with instantaneous CSS variant switching and saved preferences.
-- **🔍 Instant Search & Priority Filter:** Real-time search across task titles/descriptions, plus one-click priority filtering (*Urgent*, *High*, *Medium*, *Low*).
-- **💾 JSON Backup & Restore:** Export all board data as a `.json` file or restore previously backed up tasks.
-- **⚡ Zero Clutter UI:** Modern minimalist interface inspired by Linear and Notion.
+### 🎯 Streamlined Kanban Workflow
+- **4-Stage Pipeline:** Organize work across *To Do*, *In Progress*, *In Review*, and *Done*.
+- **Native Drag & Drop:** Move cards between stages with real-time drop-zone highlights.
+- **Quick Actions:** Toggle completion status with one click, or jump directly into modal editing.
+
+### 🔍 Instant Search & Filtering
+- **Live Search:** Instant client-side filtering across task titles and descriptions.
+- **Priority Triage:** Filter by severity levels: `Urgent`, `High`, `Medium`, and `Low`.
+- **Progress Tracking:** Real-time completion counter and percentage indicator.
+
+### 💾 Data Portability & Backup
+- **JSON Export:** Download your entire board as an offline `.json` backup file.
+- **JSON Import:** Restore or migrate tasks between browsers with format validation.
+- **Demo Reset:** One-click restore to sample engineering sprint tasks for evaluation.
+
+### 🌓 Thoughtful Design & Theming
+- **Adaptive Dark / Light Theme:** Custom-tailored color palettes using Tailwind CSS v4 custom variants.
+- **Responsive Layout:** Optimized from compact mobile views to ultrawide desktop monitors.
+- **Accessible & Clean Typography:** High contrast ratios, semantic hierarchy, and subtle transitions.
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Framework** | [React 19](https://react.dev/) | Component architecture & declarative state management |
+| **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict type safety, interfaces, and compile-time validation |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) | Modern utility-first styling with native dark mode variant |
+| **Icons** | [Lucide React](https://lucide.dev/) | Crisp, consistent icon set |
+| **Bundler** | [Vite](https://vitejs.dev/) | Ultra-fast HMR and production rollups |
+| **Hosting** | [Netlify](https://www.netlify.com/) | Continuous deployment with automated build pipeline |
 
 ---
 
@@ -60,84 +79,77 @@ This project fulfills all requirements specified in the project guidelines:
 ```text
 flowboard/
 ├── public/
-│   └── favicon.svg              # Custom SVG Kanban logo
+│   └── favicon.svg              # Custom SVG icon
 ├── screenshots/
-│   ├── light.png                # Light mode screenshot
-│   └── dark.png                 # Dark mode screenshot
+│   ├── light.png                # Light mode capture
+│   └── dark.png                 # Dark mode capture
 ├── src/
-│   ├── components/              # Modular UI components
-│   │   ├── Column.tsx           # Column droppable zone
-│   │   ├── DeleteConfirmModal.tsx # Delete confirmation modal
-│   │   ├── FilterBar.tsx        # Search, priority filters & progress
-│   │   ├── Header.tsx           # Brand, theme toggle, new task & backup
-│   │   ├── ImportExportModal.tsx# JSON backup / restore modal
-│   │   ├── TaskCard.tsx         # Draggable task card
-│   │   └── TaskModal.tsx        # Add / Edit task modal
-│   ├── interfaces/              # TypeScript types & interfaces
-│   │   ├── column.ts            # Column structure
-│   │   ├── filter.ts            # Filter & stats interfaces
-│   │   └── task.ts              # Task & TaskFormData schemas
-│   ├── pages/                   # Application pages
-│   │   └── BoardPage.tsx        # Main board layout & CRUD state
-│   ├── utils/                   # Helpers and services
-│   │   ├── constants.ts         # Columns, priority configs & sample tasks
-│   │   ├── date.ts              # Due date formatting & overdue checks
-│   │   └── storage.ts           # LocalStorage service & JSON helpers
-│   ├── App.tsx                  # Root application component
-│   ├── index.css                # Tailwind CSS v4 styling & dark variant
-│   └── main.tsx                 # React DOM entry point
-├── index.html                   # HTML template
-├── netlify.toml                 # Netlify build & redirect rules
-├── package.json                 # Dependencies and build scripts
+│   ├── components/              # Reusable UI components
+│   │   ├── Column.tsx           # Column droppable container
+│   │   ├── DeleteConfirmModal.tsx # Safe deletion dialog
+│   │   ├── FilterBar.tsx        # Search, priority pills & metrics
+│   │   ├── Header.tsx           # Brand navigation & primary actions
+│   │   ├── ImportExportModal.tsx# JSON backup & restore modal
+│   │   ├── TaskCard.tsx         # Draggable task item
+│   │   └── TaskModal.tsx        # Task creation & edit dialog
+│   ├── interfaces/              # TypeScript contracts
+│   │   ├── column.ts            # Column definitions
+│   │   ├── filter.ts            # Filter & stats models
+│   │   └── task.ts              # Core Task data models
+│   ├── pages/
+│   │   └── BoardPage.tsx        # Board view & state coordinator
+│   ├── utils/                   # Shared utilities
+│   │   ├── constants.ts         # Initial mock tasks & presets
+│   │   ├── date.ts              # Relative date formatting
+│   │   └── storage.ts           # LocalStorage synchronization
+│   ├── App.tsx                  # Root component
+│   ├── index.css                # Base stylesheet & dark mode variants
+│   └── main.tsx                 # Application bootstrap
+├── index.html                   # HTML entry point
+├── netlify.toml                 # Production routing rules
+├── package.json                 # Project dependencies & scripts
 └── vite.config.ts               # Vite configuration
 ```
 
 ---
 
-## 🛠️ Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+- [Node.js](https://nodejs.org/) (version 18 or later recommended)
+- `npm`, `pnpm`, or `yarn`
 
-### 1. Install dependencies
-```bash
-npm install
-```
+### Installation
 
-### 2. Start development server
-```bash
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### 3. Build for production
-```bash
-npm run build
-```
-
----
-
-## 🚀 Deploy to Netlify
-
-### Option 1: Automatic Deploy via GitHub (Recommended)
-1. Push this repository to your GitHub account:
+1. **Clone the repository:**
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/flowboard.git
-   git push -u origin main
+   git clone https://github.com/hazalakks/flowboard.git
+   cd flowboard
    ```
-2. Log into [Netlify.com](https://www.netlify.com).
-3. Click **"Add new site"** > **"Import an existing project"** and select your `flowboard` repo.
-4. Netlify will auto-detect the configuration:
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-5. Click **"Deploy flowboard"**.
 
-### Option 2: Drag & Drop Deploy
-1. Run `npm run build`.
-2. Go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag the `dist` folder into the upload box.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the local development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+5. **Lint the codebase:**
+   ```bash
+   npm run lint
+   ```
 
 ---
 
 ## 📄 License
-MIT License. Open source and free for personal & educational use.
+
+This project is licensed under the [MIT License](LICENSE) — feel free to use and adapt it for your own personal or commercial projects.
