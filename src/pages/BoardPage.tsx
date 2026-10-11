@@ -10,7 +10,6 @@ import {
   saveThemePreference 
 } from '../utils/storage';
 import { Header } from '../components/Header';
-import { StatsOverview } from '../components/StatsOverview';
 import { FilterBar } from '../components/FilterBar';
 import { Column } from '../components/Column';
 import { TaskModal } from '../components/TaskModal';
@@ -19,19 +18,18 @@ import { ImportExportModal } from '../components/ImportExportModal';
 import { CheckCircle2 } from 'lucide-react';
 
 export const BoardPage: React.FC = () => {
-  // 1. Storage & Theme States
+  // Theme & Storage
   const [tasks, setTasks] = useState<Task[]>(() => loadTasksFromStorage());
   const [theme, setTheme] = useState<'light' | 'dark'>(() => getInitialTheme());
 
-  // 2. Filter State
+  // Filter State
   const [filter, setFilter] = useState<FilterState>({
     search: '',
     priority: 'all',
     tag: 'all',
-    sortBy: 'date_desc',
   });
 
-  // 3. Modal States
+  // Modal States
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [defaultStatusForNew, setDefaultStatusForNew] = useState<TaskStatus>('todo');
@@ -41,17 +39,17 @@ export const BoardPage: React.FC = () => {
 
   const [isImportExportOpen, setIsImportExportOpen] = useState(false);
 
-  // 4. Toast notification state
+  // Toast Notification
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
-      setToastMessage((current) => (current === msg ? null : current));
-    }, 3000);
+      setToastMessage((curr) => (curr === msg ? null : curr));
+    }, 2500);
   }, []);
 
-  // Theme synchronization with HTML document element
+  // Sync theme with HTML class
   useEffect(() => {
     saveThemePreference(theme);
   }, [theme]);
@@ -60,17 +58,12 @@ export const BoardPage: React.FC = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  // Helper to persist tasks
   const updateAndPersistTasks = useCallback((newTasks: Task[]) => {
     setTasks(newTasks);
     saveTasksToStorage(newTasks);
   }, []);
 
-  // ==========================================
-  // CRUD Operations
-  // ==========================================
-
-  // [CREATE / EKLE]
+  // CRUD: Create (Ekle)
   const handleCreateTask = (formData: TaskFormData) => {
     const newTask: Task = {
       id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
@@ -86,10 +79,10 @@ export const BoardPage: React.FC = () => {
 
     const nextTasks = [newTask, ...tasks];
     updateAndPersistTasks(nextTasks);
-    showToast(`"${newTask.title}" başarıyla eklendi!`);
+    showToast(`Task "${newTask.title}" created!`);
   };
 
-  // [UPDATE / GÜNCELLE]
+  // CRUD: Update (Güncelle)
   const handleUpdateTask = (formData: TaskFormData) => {
     if (!editingTask) return;
 
@@ -110,23 +103,25 @@ export const BoardPage: React.FC = () => {
     });
 
     updateAndPersistTasks(nextTasks);
-    showToast(`"${formData.title}" güncellendi.`);
+    showToast(`Task "${formData.title}" updated.`);
   };
 
-  // [DELETE / SİL]
+  // CRUD: Delete (Sil)
   const handleConfirmDelete = () => {
     if (!taskToDelete) return;
 
     const nextTasks = tasks.filter((t) => t.id !== taskToDelete.id);
     updateAndPersistTasks(nextTasks);
-    showToast(`"${taskToDelete.title}" silindi.`);
+    showToast(`Task "${taskToDelete.title}" deleted.`);
     setTaskToDelete(null);
   };
 
-  // [UPDATE - Drag and Drop Status Change]
+  // Drag & Drop Status Update
   const handleDropTask = (taskId: string, targetStatus: TaskStatus) => {
     const existing = tasks.find((t) => t.id === taskId);
     if (!existing || existing.status === targetStatus) return;
+
+    const targetColumn = COLUMNS.find((c) => c.id === targetStatus);
 
     const nextTasks = tasks.map((t) => {
       if (t.id === taskId) {
@@ -140,16 +135,15 @@ export const BoardPage: React.FC = () => {
     });
 
     updateAndPersistTasks(nextTasks);
-    showToast(`Görev "${COLUMNS.find((c) => c.id === targetStatus)?.title}" sütununa taşındı.`);
+    showToast(`Moved to ${targetColumn?.title || targetStatus}`);
   };
 
-  // Drag start helper
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
     e.dataTransfer.setData('text/plain', taskId);
     e.dataTransfer.effectAllowed = 'move';
   };
 
-  // Quick toggle completed
+  // Toggle complete
   const handleToggleDone = (task: Task) => {
     const newStatus: TaskStatus = task.status === 'done' ? 'todo' : 'done';
     const nextTasks = tasks.map((t) => {
@@ -163,25 +157,23 @@ export const BoardPage: React.FC = () => {
       return t;
     });
     updateAndPersistTasks(nextTasks);
-    showToast(newStatus === 'done' ? 'Görev tamamlandı olarak işaretlendi! 🎉' : 'Görev yapılacaklara alındı.');
+    showToast(newStatus === 'done' ? 'Task marked as completed! 🎉' : 'Task moved to To Do');
   };
 
-  // Reset to initial demo tasks
+  // Reset to demo tasks
   const handleResetDemo = () => {
-    if (window.confirm('Demo verilerine sıfırlamak istediğinize emin misiniz?')) {
+    if (window.confirm('Reset board to sample demo tasks?')) {
       const reset = resetTasksToDefault();
       setTasks(reset);
-      showToast('Pano demo verilerine sıfırlandı.');
+      showToast('Board reset to demo tasks.');
     }
   };
 
-  // JSON Import success handler
   const handleImportSuccess = (imported: Task[]) => {
     updateAndPersistTasks(imported);
-    showToast(`${imported.length} adet görev içe aktarıldı.`);
+    showToast(`${imported.length} tasks imported successfully.`);
   };
 
-  // Modal openers
   const openCreateModal = (status: TaskStatus = 'todo') => {
     setEditingTask(null);
     setDefaultStatusForNew(status);
@@ -198,67 +190,39 @@ export const BoardPage: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  // ==========================================
-  // Filter & Compute Derived Data
-  // ==========================================
+  // Filter tasks
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
-      // 1. Search Query
       if (filter.search.trim()) {
         const query = filter.search.toLowerCase();
         const matchesTitle = task.title.toLowerCase().includes(query);
         const matchesDesc = task.description.toLowerCase().includes(query);
         if (!matchesTitle && !matchesDesc) return false;
       }
-
-      // 2. Priority Filter
       if (filter.priority !== 'all' && task.priority !== filter.priority) {
         return false;
       }
-
-      // 3. Tag Filter
       if (filter.tag !== 'all' && (!task.tags || !task.tags.includes(filter.tag))) {
         return false;
       }
-
       return true;
-    }).sort((a, b) => {
-      if (filter.sortBy === 'date_desc') {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }
-      if (filter.sortBy === 'date_asc') {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      }
-      if (filter.sortBy === 'title_asc') {
-        return a.title.localeCompare(b.title, 'tr');
-      }
-      if (filter.sortBy === 'priority_desc') {
-        const pMap = { urgent: 4, high: 3, medium: 2, low: 1 };
-        return pMap[b.priority] - pMap[a.priority];
-      }
-      return 0;
     });
   }, [tasks, filter]);
 
-  // Compute Board Statistics
+  // Statistics
   const stats: BoardStats = useMemo(() => {
     const total = tasks.length;
-    const completed = tasks.filter((t) => t.status === 'done').length;
+    const todo = tasks.filter((t) => t.status === 'todo').length;
     const inProgress = tasks.filter((t) => t.status === 'in_progress').length;
-    const highPriority = tasks.filter((t) => t.priority === 'urgent' || t.priority === 'high').length;
-    const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+    const review = tasks.filter((t) => t.status === 'review').length;
+    const done = tasks.filter((t) => t.status === 'done').length;
+    const completionRate = total > 0 ? Math.round((done / total) * 100) : 0;
 
-    return {
-      total,
-      completed,
-      inProgress,
-      highPriority,
-      completionRate,
-    };
+    return { total, todo, inProgress, review, done, completionRate };
   }, [tasks]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-150">
       
       {/* 1. Header */}
       <Header
@@ -270,42 +234,17 @@ export const BoardPage: React.FC = () => {
       />
 
       {/* 2. Main Board Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
         
-        {/* Project Intro / Banner */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-200/80 dark:border-slate-800">
-          <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              Sprint & Görev Panosu
-            </h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-              Görevleri sürükleyip bırakarak taşıyın, filtreleyin ve gerçek zamanlı takip edin.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              LocalStorage Aktif
-            </span>
-          </div>
-        </div>
-
-        {/* 3. Statistics Overview */}
-        <StatsOverview stats={stats} />
-
-        {/* 4. Filter Bar */}
+        {/* Simplified Filter & Search Bar */}
         <FilterBar
           filter={filter}
           onChangeFilter={(updates) => setFilter((prev) => ({ ...prev, ...updates }))}
-          onClearFilters={() =>
-            setFilter({ search: '', priority: 'all', tag: 'all', sortBy: 'date_desc' })
-          }
-          filteredCount={filteredTasks.length}
-          totalCount={tasks.length}
+          stats={stats}
         />
 
-        {/* 5. Kanban Columns Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start">
+        {/* 3. 4 Clean Kanban Columns Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
           {COLUMNS.map((column) => {
             const columnTasks = filteredTasks.filter((t) => t.status === column.id);
             return (
@@ -326,23 +265,23 @@ export const BoardPage: React.FC = () => {
 
       </main>
 
-      {/* 6. Footer */}
-      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 py-4 mt-12 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+      {/* 4. Footer */}
+      <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/40 py-3.5 mt-auto transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-500">
           <p>
-            FlowBoard • React, TypeScript, Tailwind CSS & LocalStorage ile geliştirildi.
+            FlowBoard • Built with React, TypeScript & Tailwind CSS
           </p>
           <div className="flex items-center gap-3">
-            <span>Netlify Ready</span>
-            <span>•</span>
-            <span>CRUD Mimarisi</span>
-            <span>•</span>
             <span>Drag & Drop</span>
+            <span>•</span>
+            <span>LocalStorage</span>
+            <span>•</span>
+            <span>Netlify Ready</span>
           </div>
         </div>
       </footer>
 
-      {/* 7. Modals */}
+      {/* Modals */}
       <TaskModal
         isOpen={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
@@ -365,10 +304,10 @@ export const BoardPage: React.FC = () => {
         onImportSuccess={handleImportSuccess}
       />
 
-      {/* 8. Toast Feedback notification */}
+      {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-4 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium rounded-xl shadow-xl shadow-slate-950/20 animate-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 dark:text-emerald-600 flex-shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-3.5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-medium rounded-xl shadow-lg animate-in slide-in-from-bottom-2 duration-150">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 dark:text-emerald-600 flex-shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}

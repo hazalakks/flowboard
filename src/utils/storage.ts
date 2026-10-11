@@ -1,7 +1,7 @@
 import type { Task } from '../interfaces/task';
 import { INITIAL_TASKS } from './constants';
 
-const STORAGE_KEY = 'flowboard_tasks_v1';
+const STORAGE_KEY = 'flowboard_tasks_v2';
 const THEME_KEY = 'flowboard_theme';
 
 export function loadTasksFromStorage(): Task[] {
@@ -17,7 +17,7 @@ export function loadTasksFromStorage(): Task[] {
     }
     return INITIAL_TASKS;
   } catch (error) {
-    console.error('LocalStorage okunurken hata oluştu:', error);
+    console.error('Error reading localStorage:', error);
     return INITIAL_TASKS;
   }
 }
@@ -26,7 +26,7 @@ export function saveTasksToStorage(tasks: Task[]): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   } catch (error) {
-    console.error('LocalStorage kaydedilirken hata oluştu:', error);
+    console.error('Error saving to localStorage:', error);
   }
 }
 
@@ -49,17 +49,17 @@ export function parseImportedTasks(jsonString: string): { success: boolean; data
   try {
     const parsed = JSON.parse(jsonString);
     if (!Array.isArray(parsed)) {
-      return { success: false, error: 'JSON dosyası bir görev dizisi içermelidir.' };
+      return { success: false, error: 'File must contain an array of tasks.' };
     }
     for (const item of parsed) {
       if (!item.id || !item.title || !item.status) {
-        return { success: false, error: 'Görev formatı geçersiz: "id", "title" ve "status" zorunludur.' };
+        return { success: false, error: 'Invalid task format: "id", "title" and "status" are required.' };
       }
     }
     return { success: true, data: parsed as Task[] };
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Bilinmeyen hata';
-    return { success: false, error: `JSON ayrıştırma hatası: ${msg}` };
+    const msg = err instanceof Error ? err.message : 'Unknown error';
+    return { success: false, error: `JSON parse error: ${msg}` };
   }
 }
 
@@ -68,7 +68,8 @@ export function getInitialTheme(): 'light' | 'dark' {
   if (saved === 'light' || saved === 'dark') {
     return saved;
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // Default to light mode as requested!
+  return 'light';
 }
 
 export function saveThemePreference(theme: 'light' | 'dark'): void {

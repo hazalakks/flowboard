@@ -1,6 +1,6 @@
 export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';
 
-export type TaskStatus = 'backlog' | 'todo' | 'in_progress' | 'review' | 'done';
+export type TaskStatus = 'todo' | 'in_progress' | 'review' | 'done';
 
 export interface Task {
   id: string;
@@ -9,7 +9,7 @@ export interface Task {
   status: TaskStatus;
   priority: TaskPriority;
   tags: string[];
-  dueDate?: string; // YYYY-MM-DD format
+  dueDate?: string; // YYYY-MM-DD
   createdAt: string;
   updatedAt: string;
 }

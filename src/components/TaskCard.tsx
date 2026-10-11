@@ -4,12 +4,9 @@ import { PRIORITY_CONFIG } from '../utils/constants';
 import { formatDueDate } from '../utils/date';
 import { 
   Calendar, 
-  Tag as TagIcon, 
   Pencil, 
   Trash2, 
-  GripVertical,
-  CheckCircle2,
-  Clock
+  CheckCircle2
 } from 'lucide-react';
 
 interface TaskCardProps {
@@ -38,94 +35,88 @@ export const TaskCard: React.FC<TaskCardProps> = ({
       draggable
       onDragStart={(e) => onDragStart(e, task.id)}
       onDragEnd={onDragEnd}
-      className={`group relative bg-white dark:bg-slate-900 border rounded-xl p-3.5 shadow-xs hover:shadow-md transition-all duration-200 cursor-grab active:cursor-grabbing border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700/60 ${
-        isDone ? 'opacity-85' : ''
+      className={`group bg-white dark:bg-slate-800/90 border rounded-xl p-3.5 shadow-2xs hover:shadow-md transition-all duration-150 cursor-grab active:cursor-grabbing border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 ${
+        isDone ? 'opacity-75' : ''
       }`}
     >
-      {/* Top Header: Priority Badge + Drag Handle + Action Buttons */}
+      {/* Priority & Actions */}
       <div className="flex items-center justify-between gap-2 mb-2">
-        <div className="flex items-center gap-1.5">
-          <span
-            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold border ${priority.badge}`}
-          >
-            <span className={`w-1.5 h-1.5 rounded-full ${priority.dot}`} />
-            {priority.label}
-          </span>
-        </div>
+        <span
+          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-semibold border ${priority.badge}`}
+        >
+          <span className={`w-1.5 h-1.5 rounded-full ${priority.dot}`} />
+          {priority.label}
+        </span>
 
-        <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-          {/* Quick complete toggle */}
+        <div className="flex items-center gap-0.5 opacity-40 group-hover:opacity-100 transition-opacity">
+          {/* Quick complete */}
           <button
             onClick={() => onToggleDone(task)}
-            title={isDone ? 'Tamamlanmadı olarak işaretle' : 'Tamamlandı olarak işaretle'}
+            title={isDone ? 'Mark as incomplete' : 'Mark as completed'}
             className={`p-1 rounded-md transition-colors ${
               isDone 
-                ? 'text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/50' 
-                : 'text-slate-400 hover:text-emerald-600 hover:bg-slate-100 dark:hover:bg-slate-800'
+                ? 'text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40' 
+                : 'text-slate-400 hover:text-emerald-600 hover:bg-slate-100 dark:hover:bg-slate-700'
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
           </button>
 
-          {/* Edit Button */}
+          {/* Edit */}
           <button
             onClick={() => onEdit(task)}
-            title="Görevi Düzenle"
-            className="p-1 rounded-md text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Edit task"
+            className="p-1 rounded-md text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
           >
             <Pencil className="w-3.5 h-3.5" />
           </button>
 
-          {/* Delete Button */}
+          {/* Delete */}
           <button
             onClick={() => onDelete(task)}
-            title="Görevi Sil"
-            className="p-1 rounded-md text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Delete task"
+            className="p-1 rounded-md text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
-
-          {/* Drag Handle Indicator */}
-          <div className="text-slate-300 dark:text-slate-600 p-0.5 cursor-grab">
-            <GripVertical className="w-3.5 h-3.5" />
-          </div>
         </div>
       </div>
 
-      {/* Task Title */}
+      {/* Title */}
       <h3
-        className={`text-sm font-semibold text-slate-900 dark:text-slate-100 mb-1.5 leading-snug line-clamp-2 ${
-          isDone ? 'line-through text-slate-500 dark:text-slate-400' : ''
+        className={`text-sm font-medium text-slate-900 dark:text-slate-100 mb-1 leading-snug line-clamp-2 ${
+          isDone ? 'line-through text-slate-400 dark:text-slate-500' : ''
         }`}
       >
         {task.title}
       </h3>
 
-      {/* Task Description */}
+      {/* Description */}
       {task.description && (
-        <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-3 leading-relaxed">
+        <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-2.5 leading-relaxed">
           {task.description}
         </p>
       )}
 
-      {/* Tags */}
-      {task.tags && task.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1 mb-2.5">
-          {task.tags.map((tag) => (
+      {/* Tags & Due Date Footer */}
+      <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[11px]">
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1">
+          {task.tags && task.tags.slice(0, 2).map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+              className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300"
             >
-              <TagIcon className="w-2.5 h-2.5 text-slate-400" />
               {tag}
             </span>
           ))}
+          {task.tags && task.tags.length > 2 && (
+            <span className="text-[10px] text-slate-400">+{task.tags.length - 2}</span>
+          )}
         </div>
-      )}
 
-      {/* Card Footer: Due Date */}
-      {task.dueDate && (
-        <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80 text-[11px]">
+        {/* Due Date */}
+        {task.dueDate && (
           <span
             className={`inline-flex items-center gap-1 font-medium ${
               dueDateInfo.isOverdue
@@ -135,15 +126,11 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 : 'text-slate-500 dark:text-slate-400'
             }`}
           >
-            {dueDateInfo.isOverdue ? (
-              <Clock className="w-3 h-3 text-rose-500 animate-bounce" />
-            ) : (
-              <Calendar className="w-3 h-3 text-slate-400" />
-            )}
+            <Calendar className="w-3 h-3 text-slate-400" />
             {dueDateInfo.text}
           </span>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

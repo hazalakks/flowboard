@@ -4,13 +4,13 @@ export interface FilterState {
   search: string;
   priority: TaskPriority | 'all';
   tag: string | 'all';
-  sortBy: 'date_desc' | 'date_asc' | 'priority_desc' | 'title_asc';
 }
 
 export interface BoardStats {
   total: number;
-  completed: number;
+  todo: number;
   inProgress: number;
-  highPriority: number;
+  review: number;
+  done: number;
   completionRate: number;
 }
